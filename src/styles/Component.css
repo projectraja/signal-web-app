@@ -1,0 +1,44 @@
+.custom-btn {
+    background-color: var(--primary-color);
+    border-radius: 7px
+}
+
+.custom-input {
+    border-radius: 5px !important;
+    border: none !important;
+    background-color: #ECEFF1 !important;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    border: 1px solid rgba(99, 93, 93, 0.3);
+    border-radius: 7px;
+}
+
+.custom-table-header {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    background: #f9f9f9cf;
+    border-bottom: 1px solid rgba(99, 93, 93, 0.3);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.custom-table-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px solid rgba(99, 93, 93, 0.3)
+}
+
+.custom-table-header-cell {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.custom-table-row-cell {
+    font-weight: 500;
+    font-size: 15px;
+    color: #000000;
+}

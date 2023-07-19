@@ -1,0 +1,7 @@
+.sidebar-icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7476%) hue-rotate(138deg) brightness(112%) contrast(98%);
+}
+
+.sidebar-icon-active {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(5122%) hue-rotate(233deg) brightness(101%) contrast(100%);
+}

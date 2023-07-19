@@ -1,0 +1,23 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url("../assets/images/login-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.login-btn {
+    background-image: linear-gradient(to right, #21D4FD, #2152FF);
+    border: none !important;
+    border-radius: 5px;
+}
+
+.login-input {
+    background: #FFFFFF;
+    border: 3px solid #EBEFFE;
+    border-radius: 6px;
+}

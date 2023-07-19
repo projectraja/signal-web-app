@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "Poppins";
+    src: url('../assets/fonts/poppins/Poppins-Regular.ttf');
+}
+
+@import url(Common.css);
+@import url(Layout.css);
+@import url(IconColors.css);
+@import url(Component.css);
+@import url(Login.css);
