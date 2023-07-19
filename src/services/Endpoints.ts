@@ -1,22 +1,17 @@
 const Endpoints = {
     Timeout: 30000,
     // BaseURL: 'http://localhost:8080',
-    BaseURL: 'https://7da1-2401-4900-1cd4-18a7-8471-e055-be0d-a4ab.ngrok-free.app',
+    BaseURL: 'https://3fff-117-194-137-198.ngrok.io',
     // User apis
-    Registration: '/user/registration',
     Login: '/user/login',
-    AdminUser: '/user',
-    ResetPassword: '/user/reset-password',
+    LoginOTPVerification: '/user/login-otp-verification',
+    CreateUser: '/user',
+    Roles: '/roles',
+    Permissions: '/user/permissions',
+    Sections: '/section',
     RefreshToken: '/user/refresh-token',
     // Secure apis
-    Station: '/station',
-    Platform: '/platform',
-    Flyover: '/flyover',
-    Train: '/train',
-    AssignPlatform: '/assign-platform',
-    Advertisement: '/advertisement',
-    Display: '/device',
-    Language: '/language'
+    Station: '/station'
 }
 
 export default Endpoints;

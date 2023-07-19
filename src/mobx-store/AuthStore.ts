@@ -11,9 +11,24 @@ export default class AuthStore {
     @observable userId: number = 0;
     @observable name: string = '';
     @observable empId: string = '';
+    @observable loginOTP: string = '';
     @observable roleName: string = '';
     @observable password: string = '';
     @observable confirmPassword: string = '';
+    @observable roles: any[] = [];
+    @observable sections: any[] = [];
+
+    @observable selectedUserId: string = '';
+    @observable userName: string = '';
+    @observable userEmpId: string = '';
+    @observable userRoleId: string = '';
+    @observable userMobile: string = '';
+    @observable userMail: string = '';
+    @observable userPassword: string = '';
+    @observable userConfirmPassword: string = '';
+    @observable employees: any[] = [];
+
+
     @observable adminStationId: number = 0;
     @observable adminId: number = 0;
     @observable adminUserId: number = 0;
@@ -28,7 +43,8 @@ export default class AuthStore {
     @observable refreshToken: string = '';
     @observable isLoading: boolean = false;
     @observable formLoginErrors: any = {};
-    @observable formRegistrationErrors: any = {};
+    @observable formLoginOTPErrors: any = {};
+    @observable formEmployeeRegistrationErrors: any = {};
 
     constructor() {
         makeObservable(this);
@@ -40,7 +56,8 @@ export default class AuthStore {
         this.size = 10;
         this.totalItems = 0;
         this.formLoginErrors = {};
-        this.formRegistrationErrors = {};
+        this.formLoginOTPErrors = {};
+        this.formEmployeeRegistrationErrors = {};
     }
 
     @action resetData() {
@@ -48,6 +65,20 @@ export default class AuthStore {
         this.userId = 0;
         this.name = '';
         this.empId = '';
+        this.loginOTP = '';
+        this.roles = [];
+        this.sections = [];
+        this.selectedUserId = '';
+        this.userName = '';
+        this.userEmpId = '';
+        this.userRoleId = '';
+        this.userMobile = '';
+        this.userMail = '';
+        this.userPassword = '';
+        this.userConfirmPassword = '';
+        this.employees = [];
+
+
         this.roleName = '';
         this.adminStationId = 0;
         this.adminId = 0;
@@ -104,35 +135,60 @@ export default class AuthStore {
         }
     }
 
-    @action isValidAdminRegistrationForm() {
-        this.formRegistrationErrors = {};
+    @action isValidLoginOTPForm() {
+        this.formLoginOTPErrors = {};
 
-        if (!this.adminName) {
-            this.formRegistrationErrors.adminName = Messages.EmptyFullName;
+        if (!this.loginOTP) {
+            this.formLoginOTPErrors.loginOTP = Messages.EmptyOTP;
+        } else if (this.loginOTP?.length < 5) {
+            this.formLoginOTPErrors.loginOTP = Messages.InvalidOTP;
         }
-        if (!this.adminEmpId) {
-            this.formRegistrationErrors.adminEmpId = Messages.EmptyEmpId;
+
+        if (Object.keys(this.formLoginOTPErrors).length === 0) {
+            return true;
+        } else {
+            return false;
         }
-        if (!this.adminPassword && !this.adminConfirmPassword) {
-            this.formRegistrationErrors.adminPassword = Messages.EmptyPassword;
-            this.formRegistrationErrors.adminConfirmPassword = Messages.EmptyConfirmPassword;
+    }
+
+    @action isValidEmployeeRegistrationForm() {
+        this.formEmployeeRegistrationErrors = {};
+
+        if (!this.userRoleId) {
+            this.formEmployeeRegistrationErrors.userRoleId = Messages.EmptyRoleId;
         }
-        else if (!this.adminPassword) {
-            this.formRegistrationErrors.adminPassword = Messages.EmptyPassword;
-        } else if (this.adminPassword.length < 5) {
-            this.formRegistrationErrors.adminPassword = Messages.InvalidPassword;
-        } else if (!this.adminConfirmPassword) {
-            this.formRegistrationErrors.adminConfirmPassword = Messages.EmptyConfirmPassword;
-        } else if (this.adminConfirmPassword.length < 5) {
-            this.formRegistrationErrors.adminConfirmPassword = Messages.InvalidPassword;
-        } else if (this.adminPassword !== this.adminConfirmPassword) {
-            this.formRegistrationErrors.adminConfirmPassword = Messages.ConfirmPasswordMismatch;
+        if (!this.userName) {
+            this.formEmployeeRegistrationErrors.userName = Messages.EmptyFullName;
+        }
+        if (!this.userEmpId) {
+            this.formEmployeeRegistrationErrors.userEmpId = Messages.EmptyEmpId;
+        }
+        if (!this.userMobile) {
+            this.formEmployeeRegistrationErrors.userMobile = Messages.EmptyPhone;
+        }
+        if (!this.userMail) {
+            this.formEmployeeRegistrationErrors.userMail = Messages.EmptyEmail;
+        }
+        if (!this.userPassword && !this.userConfirmPassword) {
+            this.formEmployeeRegistrationErrors.userPassword = Messages.EmptyPassword;
+            this.formEmployeeRegistrationErrors.userConfirmPassword = Messages.EmptyConfirmPassword;
+        }
+        else if (!this.userPassword) {
+            this.formEmployeeRegistrationErrors.userPassword = Messages.EmptyPassword;
+        } else if (this.userPassword.length < 5) {
+            this.formEmployeeRegistrationErrors.userPassword = Messages.InvalidPassword;
+        } else if (!this.userConfirmPassword) {
+            this.formEmployeeRegistrationErrors.userConfirmPassword = Messages.EmptyConfirmPassword;
+        } else if (this.userConfirmPassword.length < 5) {
+            this.formEmployeeRegistrationErrors.userConfirmPassword = Messages.InvalidPassword;
+        } else if (this.userPassword !== this.userConfirmPassword) {
+            this.formEmployeeRegistrationErrors.userConfirmPassword = Messages.ConfirmPasswordMismatch;
         }
         if (!this.adminStationId) {
-            this.formRegistrationErrors.adminStationId = Messages.EmptyStationCode;
+            this.formEmployeeRegistrationErrors.adminStationId = Messages.EmptyStationCode;
         }
 
-        if (Object.keys(this.formRegistrationErrors).length === 0) {
+        if (Object.keys(this.formEmployeeRegistrationErrors).length === 0) {
             return true;
         } else {
             return false;
@@ -140,19 +196,19 @@ export default class AuthStore {
     }
 
     @action isValidAdminUpdateForm() {
-        this.formRegistrationErrors = {};
+        this.formEmployeeRegistrationErrors = {};
 
         if (!this.adminName) {
-            this.formRegistrationErrors.adminName = Messages.EmptyFullName;
+            this.formEmployeeRegistrationErrors.adminName = Messages.EmptyFullName;
         }
         if (!this.adminEmpId) {
-            this.formRegistrationErrors.adminEmpId = Messages.EmptyEmpId;
+            this.formEmployeeRegistrationErrors.adminEmpId = Messages.EmptyEmpId;
         }
         if (!this.adminStationId) {
-            this.formRegistrationErrors.adminStationId = Messages.EmptyStationCode;
+            this.formEmployeeRegistrationErrors.adminStationId = Messages.EmptyStationCode;
         }
 
-        if (Object.keys(this.formRegistrationErrors).length === 0) {
+        if (Object.keys(this.formEmployeeRegistrationErrors).length === 0) {
             return true;
         } else {
             return false;
@@ -178,16 +234,16 @@ export default class AuthStore {
         this.setUserDetails();
     }
 
-    @action setAdminUserValues = (id: any) => {
-        const selectedUser = this.adminUsers.find((user) => user.id === id);
+    @action setEmployeeValues = (id: any) => {
+        const selectedUser = this.employees.find((employee) => employee.id === id);
 
-        this.adminId = selectedUser?.id;
-        this.adminUserId = selectedUser?.userId;
-        this.adminEmpId = selectedUser?.empId;
-        this.adminName = selectedUser?.name;
-        this.adminRoleName = selectedUser?.roleName;
-        this.adminStationId = selectedUser?.stationId;
-        this.formRegistrationErrors = {};
+        this.selectedUserId = selectedUser?.id;
+        this.userRoleId = selectedUser?.roleId;
+        this.userEmpId = selectedUser?.empId;
+        this.userName = selectedUser?.name;
+        this.userMobile = selectedUser?.phome;
+        this.userMail = selectedUser?.email;
+        this.formEmployeeRegistrationErrors = {};
     }
 
     @action async updateToken(tokenData: any) {

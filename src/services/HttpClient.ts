@@ -7,7 +7,7 @@ import FunctionUtil from '../utils/Function-Util';
 import Endpoints from './Endpoints';
 
 const HttpClient = (navigate: NavigateFunction | any = null) => {
-    const { advertisementStore, authStore } = RootStore;
+    const { authStore } = RootStore;
 
     const GetResponse = async (endpoint: string) => {
         let retResp: any = {};
@@ -136,7 +136,6 @@ const HttpClient = (navigate: NavigateFunction | any = null) => {
                 headers: headers, method: method, url: url, data: data,
                 onUploadProgress: (progressEvent: any) => {
                     const progressPercentage = Math.round((progressEvent?.loaded * 100) / progressEvent?.total);
-                    advertisementStore.uploadPercentage = progressPercentage;
                 }
             });
         } catch (err: any) {

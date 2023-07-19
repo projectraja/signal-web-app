@@ -10,7 +10,7 @@ import useLogout from "../../hooks/useLogout";
 
 let isValidForm: boolean = true;
 
-const Login: React.FC = () => {
+const OTPVerification: React.FC = () => {
     let { authStore } = RootStore;
     let navigate = useNavigate();
     const logoutCb = useLogout();
@@ -19,21 +19,20 @@ const Login: React.FC = () => {
         event.preventDefault();
         var { name, value } = event.target;
 
-        if (name === 'empId') {
-            authStore.empId = value;
-        } else {
-            authStore.password = value;
+        if (name === 'loginOTP') {
+            authStore.loginOTP = value;
         }
+
         if (!isValidForm) {
             authStore.isValidLoginForm();
         }
     }
 
-    const onSubmitLogin = async (event: any) => {
+    const onSubmitVerifyOTP = async (event: any) => {
         event.preventDefault()
-        if (authStore?.isValidLoginForm()) {
+        if (authStore?.isValidLoginOTPForm()) {
             isValidForm = true;
-            await AuthHelper().Login(navigate, logoutCb);
+            await AuthHelper().OTPVerification(navigate, logoutCb);
         } else {
             isValidForm = false;
         }
@@ -46,31 +45,23 @@ const Login: React.FC = () => {
                     <div className="col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                         <div className="card px-3 py-2 m-0" style={{ border: 'none' }}>
                             <div className="card-body">
-                                <form onSubmit={onSubmitLogin}>
+                                <form onSubmit={onSubmitVerifyOTP}>
                                     <div className="row justify-content-center">
                                         <img src={Images.BrandLogoWithName} alt="Login Logo" style={{ width: '210px', height: '175px' }} />
                                     </div>
                                     <div className="row justify-content-center">
-                                        <div className="text-center mb-3 mt-2 text-secondary">Login to your account</div>
+                                        <div className="text-center mb-3 mt-2 text-secondary">OTP Verification</div>
                                     </div>
 
-                                    <FormGroup isRequired label='Employee Id' error={authStore?.formLoginErrors?.empId}>
-                                        <Input name='empId' placeholder="Employee Id" prefix={<UserOutlined />}
-                                            className='login-input' autoComplete="off" onChange={onChangeValue} value={authStore?.empId}
-                                        />
-                                    </FormGroup>
-
-                                    <FormGroup isRequired label='Password' error={authStore?.formLoginErrors?.password}>
-                                        <Input.Password name='password' placeholder="Password" prefix={<LockOutlined />}
-                                            className='login-input' autoComplete="off"
-                                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                            onChange={onChangeValue} value={authStore?.password}
+                                    <FormGroup isRequired label='OTP' error={authStore?.formLoginOTPErrors.loginOTP}>
+                                        <Input name='loginOTP' placeholder="Login OTP"
+                                            className='login-input' autoComplete="off" onChange={onChangeValue} value={authStore?.loginOTP}
                                         />
                                     </FormGroup>
 
                                     <div className="row mt-4">
                                         <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <Button htmlType='submit' className="login-btn" type="primary" block>GENERATE OTP</Button>
+                                            <Button htmlType='submit' className="login-btn" type="primary" block>SIGN IN</Button>
                                         </div>
                                     </div>
                                     <Loader visibility={false} />
@@ -85,4 +76,4 @@ const Login: React.FC = () => {
     </PageTransition>
 }
 
-export default observer(Login);
+export default observer(OTPVerification);

@@ -7,47 +7,39 @@ import { Icons } from "../../constant/Icons";
 import { CustomTable, Loader, PageTransition, SubHeader } from "../../components";
 import { ITableColumn } from "../../interface/IComponent";
 import RootStore from "../../mobx-store/RootStore";
-import FlyoverHelper from "../../helpers/FlyoverHelper";
-import PlatformHelper from "../../helpers/PlatformHelper";
+import AuthHelper from "../../helpers/AuthHelper";
 
 const { confirm } = Modal;
 
-const Flyover: React.FC = () => {
-    const { flyoverStore, platformStore } = RootStore;
+const Employee: React.FC = () => {
+    const { authStore } = RootStore;
     const navigate = useNavigate();
     const columns: ITableColumn[] = [
         {
             key: "",
             title: "#",
-            width: '6%'
-        },
-        {
-            key: "id",
-            title: "Flyover Key",
-            width: '18%',
+            width: '5%',
             align: 'center'
         },
         {
-            key: "platformsId",
-            title: "Platform Keys",
-            width: '20%',
-            render: (platformsId: any) => (
-                <div>{`[${platformsId}]`}</div>
-            )
+            key: "empId",
+            title: "Employee Id",
+            width: '15%'
         },
         {
-            key: "description",
-            title: "Description",
-            width: '33%',
-            isTrim: true
+            key: "name",
+            title: "Employee Name",
+            width: '28%'
         },
         {
-            key: "type",
-            title: "Display Type",
-            width: '17%',
-            render: () => (
-                <Tag color={"#108ee9"}>DUAL</Tag>
-            )
+            key: "phone",
+            title: "Mobile No",
+            width: '20%'
+        },
+        {
+            key: "email",
+            title: "E-mail",
+            width: '23%'
         },
         {
             key: "id",
@@ -73,44 +65,29 @@ const Flyover: React.FC = () => {
     ];
 
     useEffect(() => {
-        getFlyovers();
+        getAll();
     }, []);
 
-    const getFlyovers = async () => {
-        await PlatformHelper(navigate).GetPlatforms();
-        await FlyoverHelper(navigate).GetFlyovers();
+    const getAll = async () => {
+        await AuthHelper().GetEmployees(navigate);
     }
 
     const onChangePage = async (page: number) => {
-        flyoverStore.page = page - 1;
-        await FlyoverHelper(navigate).GetFlyovers();
-    }
-
-    const onChangeSearch = async (event: any) => {
-        flyoverStore.searchStr = event?.target?.value;
-    }
-
-    const onSubmitSearch = async (searchStr: string = '') => {
-        if (flyoverStore?.searchStr) {
-            if (searchStr === '') {
-                flyoverStore.searchStr = '';
-            }
-            await FlyoverHelper(navigate).GetFlyovers();
-        }
+        authStore.page = page - 1;
+        await AuthHelper().GetEmployees(navigate);
     }
 
     const onDelete = async (id: any) => {
-        await FlyoverHelper(navigate).DeleteFlyover(id);
+        // await AuthHelper().DeleteAdminUser(id);
     }
 
     const onUpdate = (id: any) => {
-        flyoverStore.setFlyoverValues(id);
+        authStore.setEmployeeValues(id);
         navigate(id?.toString());
     }
 
     const navigateToAdd = () => {
         navigate('add');
-        flyoverStore.resetPostData();
     }
 
     const showDelteConfirm = (id: any) => {
@@ -130,19 +107,17 @@ const Flyover: React.FC = () => {
     return <PageTransition>
         <div>
             <SubHeader
-                title="Flyovers" count={flyoverStore.size} addBtn addBtnText='Add Flyover'
-                search onAddClick={navigateToAdd} isLoading={flyoverStore?.isLoading}
-                searchStr={flyoverStore?.searchStr} onChangeSearch={onChangeSearch}
-                onSubmitSearch={onSubmitSearch}
+                title="Employees" count={authStore.size} addBtn addBtnText='Create New Employee'
+                onAddClick={navigateToAdd} isLoading={authStore?.isLoading}
             />
-            <CustomTable
-                columns={columns} datas={flyoverStore?.flyovers}
-                defaultPaginationCurrent={1} paginationCurrent={flyoverStore?.page}
-                paginationTotal={flyoverStore?.totalItems}
-                onPageChange={onChangePage} isLoading={flyoverStore?.isLoading} />
-            <Loader visibility={flyoverStore?.isLoading} />
+            <CustomTable columns={columns}
+                datas={authStore?.employees}
+                defaultPaginationCurrent={1} paginationCurrent={authStore?.page}
+                paginationTotal={authStore?.totalItems}
+                onPageChange={onChangePage} isLoading={authStore?.isLoading} />
+            <Loader visibility={authStore?.isLoading} />
         </div>
     </PageTransition>
 }
 
-export default observer(Flyover);
+export default observer(Employee);

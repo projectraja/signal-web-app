@@ -21,33 +21,43 @@ const AuthHelper = () => {
         authStore.isLoading = false;
 
         if (resLogin?.status === 'OK') {
-            authStore.isLoggedIn = true;
-            authStore.setProfileInfo(resLogin?.data);
+            authStore.userId = 0;
             message.success(resLogin?.message, 5);
-            if (authStore?.roleName === 'SUPER ADMIN') {
-                navigate('/station', { replace: true });
-            } else {
-                await StationHelper(navigate).GetStationDetailsByUserId();
-                if (stationStore?.currentStation?.id) {
-                    navigate('/platform', { replace: true });
-                } else {
-                    navigate('/login', { replace: true });
-                }
-            }
+            navigate('/otp-verification', { replace: true });
         }
     }
 
-    const AddAdmin = async (navigate?: NavigateFunction) => {
-        let resRegistration;
-        const registrationPostData = {
-            name: authStore?.adminName,
-            empId: authStore?.adminEmpId,
-            password: authStore?.adminPassword,
-            stationId: authStore?.adminStationId
-        };
+    const OTPVerification = async (navigate: NavigateFunction, logoutCb: any) => {
+        let resLogin: any;
+        const loginPostData = {
+            userId: authStore.userId,
+            otp: authStore.loginOTP
+        }
 
         authStore.isLoading = true;
-        resRegistration = await HttpClient().PostResponse(Endpoints.Registration, 'POST', registrationPostData);
+        resLogin = await HttpClient().PostResponse(Endpoints.LoginOTPVerification, 'POST', loginPostData);
+        authStore.isLoading = false;
+
+        if (resLogin?.status === 'OK') {
+            authStore.isLoggedIn = true;
+            message.success(resLogin?.message, 5);
+            navigate('/user', { replace: true });
+        }
+    }
+
+    const CreateEmployee = async (navigate?: NavigateFunction) => {
+        let resRegistration;
+        const registrationPostData = {
+            name: authStore.userName,
+            empId: authStore.userEmpId,
+            email: authStore.userMail,
+            password: authStore.userPassword,
+            phone: authStore.userMobile,
+            roleId: authStore.userRoleId,
+        }
+
+        authStore.isLoading = true;
+        resRegistration = await HttpClient().PostResponse(Endpoints.CreateUser, 'POST', registrationPostData);
         authStore.isLoading = false;
 
         if (resRegistration?.status === 'CREATED') {
@@ -55,17 +65,20 @@ const AuthHelper = () => {
         }
     }
 
-    const UpdateAdmin = async (navigate?: NavigateFunction) => {
+    const UpdateEmployee = async (navigate?: NavigateFunction) => {
         let resAdminUpdate;
         const updatePostData = {
-            id: authStore?.adminId,
-            name: authStore?.adminName,
-            empId: authStore?.adminEmpId,
-            stationId: authStore?.adminStationId
+            id: authStore?.selectedUserId,
+            name: authStore.userName,
+            empId: authStore.userEmpId,
+            email: authStore.userMail,
+            password: authStore.userPassword,
+            phone: authStore.userMobile,
+            roleId: authStore.userRoleId,
         };
 
         authStore.isLoading = true;
-        resAdminUpdate = await HttpClient().PostResponse(Endpoints.AdminUser, 'PUT', updatePostData);
+        resAdminUpdate = await HttpClient().PostResponse(Endpoints.CreateUser, 'PUT', updatePostData);
         authStore.isLoading = false;
 
         if (resAdminUpdate?.status === 'OK') {
@@ -73,47 +86,43 @@ const AuthHelper = () => {
         }
     }
 
-    const DeleteAdminUser = async (navigate?: NavigateFunction) => {
-        let resAdminDelete;
-        const deletePostData = {
-            id: authStore?.adminId
-        };
-
-        authStore.isLoading = true;
-        resAdminDelete = await HttpClient().PostResponse(Endpoints.AdminUser, 'DELETE', deletePostData);
-        authStore.isLoading = false;
-
-        if (resAdminDelete?.status === 'OK') {
-            message.success(resAdminDelete?.message, 5);
-        }
-    }
-
-    const GetAdminUsers = async (navigate: NavigateFunction) => {
+    const GetEmployees = async (navigate: NavigateFunction) => {
         let resAdminUsers: any;
 
-        let params = `?page=${authStore.page}&size=${authStore.size}`;
-        // if (authStore?.searchStr) {
-        //     params += `&number=${authStore?.searchStr}`;
-        // }
-
         authStore.isLoading = true;
-        resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.AdminUser + params);
+        resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.CreateUser);
         authStore.isLoading = false;
 
         if (resAdminUsers?.status === 'OK') {
-            let datas = resAdminUsers?.data;
-            if (resAdminUsers?.data?.length > 0) {
-                for (let i = 0; i < resAdminUsers?.data.length; i++) {
-                    datas[i].roleName = resAdminUsers?.data[i]?.userRole?.name;
-                }
-            }
-            authStore.adminUsers = datas;
-            authStore.page = resAdminUsers?.currentPage;
-            authStore.totalItems = resAdminUsers?.totalItems;
+            authStore.employees = resAdminUsers?.data;
         }
     }
 
-    return { Login, AddAdmin, UpdateAdmin, GetAdminUsers, DeleteAdminUser };
+    const GetRoles = async (navigate: NavigateFunction) => {
+        let resAdminUsers: any;
+
+        authStore.isLoading = true;
+        resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.Roles);
+        authStore.isLoading = false;
+
+        if (resAdminUsers?.status === 'OK') {
+            authStore.roles = resAdminUsers?.data;
+        }
+    }
+
+    const GetSections = async (navigate: NavigateFunction) => {
+        let resAdminUsers: any;
+
+        authStore.isLoading = true;
+        resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.Sections);
+        authStore.isLoading = false;
+
+        if (resAdminUsers?.status === 'OK') {
+            authStore.sections = resAdminUsers?.data;
+        }
+    }
+
+    return { Login, OTPVerification, CreateEmployee, UpdateEmployee, GetEmployees, GetRoles, GetSections };
 }
 
 export default AuthHelper;
