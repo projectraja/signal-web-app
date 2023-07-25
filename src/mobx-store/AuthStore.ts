@@ -4,9 +4,10 @@ import AppStorage from '../storage/AppStorage';
 import Messages from "../constant/Messages";
 import { IRoleData } from "../interface/IRole";
 import { IDesignationData } from "../interface/IDesignation";
+import { IEmployeesData } from "../interface/IEmployee";
 
 export default class AuthStore {
-    @observable employees: any[] = [];
+    @observable employees: IEmployeesData[] = [];
     @observable roles: IRoleData[] = [];
     @observable sections: any[] = [];
     @observable designations: IDesignationData[] = [];
@@ -26,8 +27,9 @@ export default class AuthStore {
     @observable accessToken: string = '';
     @observable refreshToken: string = '';
     @observable selectedEmployeeId: string = '';
+    @observable employeeDesignationId: string = '';
     @observable employeeName: string = '';
-    @observable employeeId: string = '';
+    @observable employeeId: number = 0;
     @observable employeeRoleId: string = '';
     @observable employeeMobile: string = '';
     @observable employeeMail: string = '';
@@ -50,6 +52,15 @@ export default class AuthStore {
         this.formEmployeeRegistrationErrors = {};
     }
 
+    @action resetEmployeeCreatePostData() {
+        this.employeeDesignationId = '';
+        this.employeeId = 0;
+        this.employeeName = '';
+        this.employeeMobile = '';
+        this.employeeMail = '';
+        this.resetLoginPostData();
+    }
+
     @action resetData() {
         this.employees = [];
         this.userId = '';
@@ -61,8 +72,9 @@ export default class AuthStore {
         this.sections = [];
         this.designations = [];
         this.selectedEmployeeId = '';
+        this.employeeDesignationId = '';
         this.employeeName = '';
-        this.employeeId = '';
+        this.employeeId = 0;
         this.employeeRoleId = '';
         this.employeeMobile = '';
         this.employeeMail = '';
@@ -125,8 +137,8 @@ export default class AuthStore {
     @action isValidEmployeeRegistrationForm() {
         this.formEmployeeRegistrationErrors = {};
 
-        if (!this.designationId) {
-            this.formEmployeeRegistrationErrors.designationId = Messages.EmptyDesignationId;
+        if (!this.employeeDesignationId) {
+            this.formEmployeeRegistrationErrors.employeeDesignationId = Messages.EmptyDesignationId;
         }
         if (!this.employeeName) {
             this.formEmployeeRegistrationErrors.employeeName = Messages.EmptyFullName;
@@ -169,12 +181,12 @@ export default class AuthStore {
     @action setEmployeeValues = (id: any) => {
         const selectedUser = this.employees.find((employee) => employee.id === id);
 
-        this.selectedEmployeeId = selectedUser?.id;
-        this.employeeRoleId = selectedUser?.roleId;
-        this.employeeId = selectedUser?.empId;
-        this.employeeName = selectedUser?.name;
-        this.employeeMobile = selectedUser?.phome;
-        this.employeeMobile = selectedUser?.email;
+        this.selectedEmployeeId = selectedUser?.id || '';
+        this.employeeDesignationId = selectedUser?.designationId || '';
+        this.employeeId = selectedUser?.empId || 0;
+        this.employeeName = selectedUser?.name || '';
+        this.employeeMobile = selectedUser?.phone || '';
+        this.employeeMail = selectedUser?.email || '';
         this.formEmployeeRegistrationErrors = {};
     }
 

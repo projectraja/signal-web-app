@@ -41,16 +41,15 @@ const DepartmentHelper = (navigate: NavigateFunction) => {
     const UpdateDepartment = async () => {
         let resUpdateDepartment: any;
         const departmentUpdateObj = {
-            'id': departmentStore?.id,
             'department': departmentStore?.name,
             'isActive': departmentStore?.isActive,
         }
 
         departmentStore.isLoading = true;
-        resUpdateDepartment = await SecureService(navigate).PostResponse(Endpoints.Department, 'PUT', departmentUpdateObj);
+        resUpdateDepartment = await SecureService(navigate).PostResponse(Endpoints.Department + '/' + departmentStore?.id, 'PUT', departmentUpdateObj);
         departmentStore.isLoading = false;
 
-        if (resUpdateDepartment?.status === 'OK') {
+        if (resUpdateDepartment?.status === 'UPDATED') {
             message.success(resUpdateDepartment?.message, 5);
             await GetDepartments();
         }

@@ -39,7 +39,7 @@ const SubHeader: React.FC<ISubHeaderProps> = (props) => {
         </div>
         <div className="col-9 d-flex justify-content-end">
             {(dropdown && props.dropdownList && props.dropdownList?.length > 0) &&
-                <div className="px-1">
+                <div className="px-1 w-50 text-end">
                     <Select
                         placeholder={dropdownText} className="custom-sub-header-select"
                         // optionFilterProp="children" style={{ width: '100%' }}
@@ -50,7 +50,7 @@ const SubHeader: React.FC<ISubHeaderProps> = (props) => {
                         //         .localeCompare((optionB!.children as unknown as string).toLowerCase())
                         // }
                         defaultValue={props?.dropdownValue} onChange={(value) => props.onChangeDropdown(value)}
-                        onClick={() => props?.onClickDropdown()}
+                        // onClick={() => props?.onClickDropdown()}
                     >
                         {props?.dropdownList?.map((dropdown: any, index: any) => {
                             return <Option key={index} value={dropdown[dropdownKey]}>{dropdown[dropdownLabel]}</Option>

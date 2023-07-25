@@ -29,7 +29,7 @@ const Employee: React.FC = () => {
         {
             key: "name",
             title: "Name",
-            width: '23%'
+            width: '30%'
         },
         {
             key: "phone",
@@ -60,17 +60,18 @@ const Employee: React.FC = () => {
                         onClick={() => onUpdate(id)} />
                 </Tooltip>
             ),
-        }, {
-            key: "id",
-            title: "Delete",
-            width: '7%',
-            render: (id: any) => (
-                <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
-                    <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
-                        onClick={() => showDelteConfirm(id)} />
-                </Tooltip>
-            ),
-        }
+        },
+        // {
+        //     key: "id",
+        //     title: "Delete",
+        //     width: '7%',
+        //     render: (id: any) => (
+        //         <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
+        //             <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
+        //                 onClick={() => showDelteConfirm(id)} />
+        //         </Tooltip>
+        //     ),
+        // }
     ];
 
     useEffect(() => {

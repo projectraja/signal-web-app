@@ -46,7 +46,7 @@ const Login: React.FC = () => {
                             <div className="card-body">
                                 <form onSubmit={onSubmitLogin}>
                                     <div className="row justify-content-center">
-                                        <img src={Images.BrandLogoWithName} alt="Login Logo" style={{ width: '210px', height: '175px' }} />
+                                        <img src={Images.BrandLogoWithName} alt="Login Logo" style={{ width: '220px', height: '180px' }} />
                                     </div>
                                     <div className="row justify-content-center">
                                         <div className="text-center mb-3 mt-2 text-secondary">Generate OTP</div>

@@ -7,12 +7,12 @@ import { Icons } from "../../constant/Icons";
 import { CustomTable, Loader, PageTransition, SubHeader } from "../../components";
 import { ITableColumn } from "../../interface/IComponent";
 import RootStore from "../../mobx-store/RootStore";
-import DepartmentHelper from "../../helpers/DepartmentHelper";
+import DesignationHelper from "../../helpers/DesignationHelper";
 
 const { confirm } = Modal;
 
-const Department: React.FC = () => {
-    const { departmentStore } = RootStore;
+const Designation: React.FC = () => {
+    const { designationStore } = RootStore;
     const navigate = useNavigate();
     const columns: ITableColumn[] = [
         {
@@ -22,8 +22,8 @@ const Department: React.FC = () => {
             align: 'center'
         },
         {
-            key: "department",
-            title: "Department Name",
+            key: "designation",
+            title: "Designation Name",
             width: '72%',
             isTrim: true
         },
@@ -45,8 +45,8 @@ const Department: React.FC = () => {
                         onClick={() => onUpdate(id)} />
                 </Tooltip>
             ),
-        }
-        // , {
+        },
+        // {
         //     key: "id",
         //     title: "Delete",
         //     width: '7%',
@@ -60,25 +60,25 @@ const Department: React.FC = () => {
     ];
 
     useEffect(() => {
-        GetDepartmentss();
+        GetDesignationss();
     }, []);
 
-    const GetDepartmentss = async () => {
-        await DepartmentHelper(navigate).GetDepartments();
+    const GetDesignationss = async () => {
+        await DesignationHelper(navigate).GetDesignations();
     }
 
     const onDelete = async (id: any) => {
-        await DepartmentHelper(navigate).DeleteDepartment(id);
+        await DesignationHelper(navigate).DeleteDesignation(id);
     }
 
     const onUpdate = (id: any) => {
-        departmentStore.setDepartmentValues(id);
+        designationStore.setDesignationValues(id);
         navigate(id?.toString());
     }
 
     const navigateToAdd = () => {
         navigate('add');
-        departmentStore.resetPostData();
+        designationStore.resetPostData();
     }
 
     const showDelteConfirm = (id: any) => {
@@ -98,16 +98,16 @@ const Department: React.FC = () => {
     return <PageTransition>
         <div>
             <SubHeader
-                title="Departments" count={1} addBtn addBtnText='Add Department'
-                search onAddClick={navigateToAdd} isLoading={departmentStore?.isLoading}
+                title="Designations" count={1} addBtn addBtnText='Add Designation'
+                search onAddClick={navigateToAdd} isLoading={designationStore?.isLoading}
             />
             <CustomTable
-                columns={columns} datas={departmentStore?.departments}
+                columns={columns} datas={designationStore?.designations}
                 defaultPaginationCurrent={1} paginationCurrent={1}
-                paginationTotal={1} isLoading={departmentStore?.isLoading} />
-            <Loader visibility={departmentStore?.isLoading} />
+                paginationTotal={1} isLoading={designationStore?.isLoading} />
+            <Loader visibility={designationStore?.isLoading} />
         </div>
     </PageTransition>
 }
 
-export default observer(Department);
+export default observer(Designation);

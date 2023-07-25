@@ -28,11 +28,11 @@ export default class DepartmentStore {
     }
 
     @action setDepartmentValues = (id: any) => {
-        const selectedDepartment: any = this.departments?.find((department:any)=> department?.id === id);
+        const selectedDepartment = this.departments?.find((department:any)=> department?.id === id);
 
         this.id = selectedDepartment?.id;
-        this.name = selectedDepartment?.departmentName;
-        this.isActive = selectedDepartment?.isActive;
+        this.name = selectedDepartment?.department || '';
+        this.isActive = selectedDepartment?.isActive || false;
         this.formCreateDepartmentErrors = {};
     }
 

@@ -40,7 +40,7 @@ const UpdateDepartment: React.FC = () => {
             <div className="row mb-2">
                 <div className="col-4">
                     <div className="col" style={{ fontWeight: '600', fontSize: '18px' }}>
-                        <span style={{ color: '#000000' }}>Add New Department</span>
+                        <span style={{ color: '#000000' }}>Update Department</span>
                     </div>
                 </div>
             </div>

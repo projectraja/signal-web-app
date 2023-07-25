@@ -75,7 +75,7 @@ const StationHelper = (navigate: NavigateFunction) => {
         resUpdateStation = await SecureService(navigate).PostResponse(Endpoints.Station, 'PUT', stationUpdateObj);
         stationStore.isLoading = false;
 
-        if (resUpdateStation?.status === 'OK') {
+        if (resUpdateStation?.status === 'UPDATED') {
             message.success(resUpdateStation?.message, 5);
             await GetStations();
         }

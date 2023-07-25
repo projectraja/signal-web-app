@@ -1,7 +1,7 @@
 import BrandLogo from '../assets/images/brand-logo.webp';
 import BrandName from '../assets/images/brand-name.webp';
-import BrandLogoWithName from '../assets/images/brand-logo-with-name.webp';
-import BrandLogoWithNameLight from '../assets/images/brand-logo-with-name-light.webp';
+import BrandLogoWithName from '../assets/images/brand-logo-with-name.png';
+import BrandLogoWithNameLight from '../assets/images/brand-logo-with-name-light.png';
 import LoginBg from '../assets/images/login-bg.webp';
 // import LoginText from '../assets/images/login-text.png';
 // import RegistrationText from '../assets/images/registration-text.png';

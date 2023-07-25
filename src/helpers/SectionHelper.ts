@@ -41,16 +41,15 @@ const SectionHelper = (navigate: NavigateFunction) => {
     const UpdateSection = async () => {
         let resUpdateSection: any;
         const sectionUpdateObj = {
-            'id': sectionStore?.id,
             'sectionName': sectionStore?.name,
             'isActive': sectionStore?.isActive,
         }
 
         sectionStore.isLoading = true;
-        resUpdateSection = await SecureService(navigate).PostResponse(Endpoints.Section, 'PUT', sectionUpdateObj);
+        resUpdateSection = await SecureService(navigate).PostResponse(Endpoints.Section + '/' + sectionStore?.id, 'PUT', sectionUpdateObj);
         sectionStore.isLoading = false;
 
-        if (resUpdateSection?.status === 'OK') {
+        if (resUpdateSection?.status === 'UPDATED') {
             message.success(resUpdateSection?.message, 5);
             await GetSections();
         }

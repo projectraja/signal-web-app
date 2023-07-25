@@ -19,7 +19,7 @@ const Station: React.FC = () => {
         {
             key: "",
             title: "#",
-            width: '5%',
+            width: '6%',
             align: 'center'
         },
         {
@@ -37,7 +37,7 @@ const Station: React.FC = () => {
         {
             key: "name",
             title: "Station Name",
-            width: '63%',
+            width: '69%',
             isTrim: true
         },
         {
@@ -50,17 +50,18 @@ const Station: React.FC = () => {
                         onClick={() => onUpdate(id)} />
                 </Tooltip>
             ),
-        }, {
-            key: "id",
-            title: "Delete",
-            width: '7%',
-            render: (id: any) => (
-                <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
-                    <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
-                        onClick={() => showDelteConfirm(id)} />
-                </Tooltip>
-            ),
-        }
+        },
+        // {
+        //     key: "id",
+        //     title: "Delete",
+        //     width: '7%',
+        //     render: (id: any) => (
+        //         <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
+        //             <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
+        //                 onClick={() => showDelteConfirm(id)} />
+        //         </Tooltip>
+        //     ),
+        // }
     ];
 
     useEffect(() => {
@@ -82,6 +83,12 @@ const Station: React.FC = () => {
 
     const onChangeSearch = async (event: any) => {
         stationStore.searchStr = event?.target?.value;
+    }
+
+    const onChangeSection = async (value: any) => {
+        console.log(value)
+        stationStore.selectedSectionId = value;
+        await StationHelper(navigate).GetStations();
     }
 
     const onSubmitSearch = async (searchStr: string = '') => {
@@ -126,7 +133,7 @@ const Station: React.FC = () => {
             <SubHeader
                 title="Stations" count={stationStore.size} addBtn addBtnText='Add Station'
                 dropdown dropdownText="Section" dropdownList={sectionStore.sections || []} dropdownValue={stationStore.selectedSectionId}
-                dropdownKey={'id'} dropdownLabel={'sectionName'}
+                dropdownKey={'id'} dropdownLabel={'sectionName'} onChangeDropdown={onChangeSection}
                 search onAddClick={navigateToAdd} isLoading={stationStore?.isLoading}
                 searchStr={stationStore?.searchStr} onChangeSearch={onChangeSearch}
                 onSubmitSearch={onSubmitSearch}

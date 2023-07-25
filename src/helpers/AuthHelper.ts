@@ -7,6 +7,7 @@ import SecureService from "../services/SecureService";
 import { ILoginRes, IOTPVerificationRes } from "../interface/ILogin";
 import { IRoleRes } from "../interface/IRole";
 import { IDesignationRes } from "../interface/IDesignation";
+import { IEmployeesRes } from "../interface/IEmployee";
 
 const AuthHelper = () => {
     let { authStore } = RootStore;
@@ -60,7 +61,7 @@ const AuthHelper = () => {
             empId: authStore.employeeId,
             email: authStore.employeeMail,
             phone: authStore.employeeMobile,
-            roleId: authStore.employeeRoleId,
+            designationId: authStore.employeeDesignationId
         }
 
         authStore.isLoading = true;
@@ -75,25 +76,24 @@ const AuthHelper = () => {
     const UpdateEmployee = async (navigate?: NavigateFunction) => {
         let resAdminUpdate;
         const updatePostData = {
-            id: authStore?.selectedEmployeeId,
             name: authStore.employeeName,
             empId: authStore.employeeId,
             email: authStore.employeeMail,
             phone: authStore.employeeMobile,
-            roleId: authStore.employeeRoleId,
+            designationId: authStore.employeeDesignationId
         };
 
         authStore.isLoading = true;
-        resAdminUpdate = await HttpClient().PostResponse(Endpoints.CreateUser, 'PUT', updatePostData);
+        resAdminUpdate = await HttpClient().PostResponse(Endpoints.CreateUser + '/' + authStore?.selectedEmployeeId, 'PUT', updatePostData);
         authStore.isLoading = false;
 
-        if (resAdminUpdate?.status === 'OK') {
+        if (resAdminUpdate?.status === 'UPDATED') {
             message.success(resAdminUpdate?.message, 5);
         }
     }
 
     const GetEmployees = async (navigate: NavigateFunction) => {
-        let resAdminUsers: any;
+        let resAdminUsers: IEmployeesRes;
 
         authStore.isLoading = true;
         resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.CreateUser);

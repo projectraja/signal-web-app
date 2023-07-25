@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
         <div className="navigation col-2">
             <div className="d-flex flex-column justify-content-center px-2" style={{ height: '8.5rem' }}>
                 <div className="mt-2 mb-1 d-flex justify-content-center">
-                    <img src={Images.BrandLogoWithNameLight} alt='brand-logo-light' style={{ width: '10.2rem', height: '8.2rem' }} />
+                    <img src={Images.BrandLogoWithNameLight} alt='brand-logo-light' style={{ width: '12.5rem', height: '9.5rem' }} />
                 </div>
             </div>
             <ul className="pt-3">

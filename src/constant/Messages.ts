@@ -3,6 +3,7 @@ const Messages = {
     EmptyFullName: 'Please enter full name',
     EmptyRoleId: 'Please select role',
     EmptyDesignationId: 'Please select designation',
+    EmptyDepartmentId: 'Please select department',
     EmptyEmpId: 'Please enter employee Id',
     InvalidEmail: 'Please enter valid e-mail',
     EmptyPhone: 'Please enter phone number',
@@ -38,7 +39,8 @@ const Messages = {
     EmptyLanguageName: 'Please enter language',
 
     EmptySectionName: 'Please enter section name',
-    EmptyDepartmentName: 'Please enter department name'
+    EmptyDepartmentName: 'Please enter department name',
+    EmptyDesignationName: 'Please enter designation'
 }
 
 export default Messages;

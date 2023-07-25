@@ -17,12 +17,12 @@ const UpdateEmployee: React.FC = () => {
         getAll();
 
         return () => {
-            stationStore.searchStr = '';
+            authStore.resetEmployeeCreatePostData();
         }
     }, []);
 
     const getAll = async () => {
-        await AuthHelper().GetRoles(navigate);
+        await AuthHelper().GetDesignations(navigate);
     }
 
     const onChangeValue = (event: any, name: string) => {
@@ -44,7 +44,7 @@ const UpdateEmployee: React.FC = () => {
 
     const onChangeSelectValue = (value: any, name: string = '') => {
         if(name === 'designationId') {
-            authStore.designationId = value;
+            authStore.employeeDesignationId = value;
         }
         if (!isValidForm) {
             authStore.isValidEmployeeRegistrationForm();
@@ -56,7 +56,7 @@ const UpdateEmployee: React.FC = () => {
         if (authStore?.isValidEmployeeRegistrationForm()) {
             isValidForm = true;
             await AuthHelper().UpdateEmployee(navigate);
-            authStore.resetLoginPostData();
+            authStore.resetEmployeeCreatePostData();
             navigate(-1);
         } else {
             isValidForm = false;
@@ -74,9 +74,9 @@ const UpdateEmployee: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
-                    <FormGroup isRequired label='Designation' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.designationId}>
+                    <FormGroup isRequired label='Designation' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeDesignationId}>
                         <Select placeholder="Select Designation" className="custom-input" style={{ width: '100%' }}
-                            onChange={(value) => onChangeSelectValue(value, 'designationId')}>
+                            onChange={(value) => onChangeSelectValue(value, 'designationId')} defaultValue={authStore?.employeeDesignationId}>
                             {authStore.designations?.map((designation, index: any) => {
                                 return <Option key={index} value={designation?.id}>{designation?.designation}</Option>
                             })}
@@ -100,14 +100,14 @@ const UpdateEmployee: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
-                    <FormGroup isRequired label='Phone' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMail}>
-                        <Input type='tel' placeholder="Phone" style={{ width: '100%' }} value={authStore.employeeMail}
+                    <FormGroup isRequired label='Phone' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMobile}>
+                        <Input type='tel' placeholder="Phone" style={{ width: '100%' }} value={authStore.employeeMobile}
                             onChange={(event) => onChangeValue(event, 'phone')} />
                     </FormGroup>
                 </div>
                 <div className="col-4">
-                    <FormGroup isRequired label='Email' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMobile}>
-                        <Input type='email' placeholder="Email" style={{ width: '100%' }} value={authStore.employeeMobile}
+                    <FormGroup isRequired label='Email' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMail}>
+                        <Input type='email' placeholder="Email" style={{ width: '100%' }} value={authStore.employeeMail}
                             onChange={(event) => onChangeValue(event, 'email')} />
                     </FormGroup>
                 </div>

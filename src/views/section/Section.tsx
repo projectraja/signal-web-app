@@ -18,13 +18,13 @@ const Section: React.FC = () => {
         {
             key: "",
             title: "#",
-            width: '5%',
+            width: '6%',
             align: 'center'
         },
         {
             key: "sectionName",
             title: "Section Name",
-            width: '66%',
+            width: '79%',
             isTrim: true
         },
         {
@@ -35,27 +35,27 @@ const Section: React.FC = () => {
                 <Tag color={isActive ? "#10e92b" : "#108ee9"}>{isActive ? 'Active' : 'InActive'}</Tag>
             )
         },
-        {
-            key: "id",
-            title: "Edit",
-            width: '7%',
-            render: (id: any) => (
-                <Tooltip placement="topLeft" title='Edit' arrowPointAtCenter>
-                    <img src={Icons.Edit} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
-                        onClick={() => onUpdate(id)} />
-                </Tooltip>
-            ),
-        }, {
-            key: "id",
-            title: "Delete",
-            width: '7%',
-            render: (id: any) => (
-                <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
-                    <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
-                        onClick={() => showDelteConfirm(id)} />
-                </Tooltip>
-            ),
-        }
+        // {
+        //     key: "id",
+        //     title: "Edit",
+        //     width: '7%',
+        //     render: (id: any) => (
+        //         <Tooltip placement="topLeft" title='Edit' arrowPointAtCenter>
+        //             <img src={Icons.Edit} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
+        //                 onClick={() => onUpdate(id)} />
+        //         </Tooltip>
+        //     ),
+        // }, {
+        //     key: "id",
+        //     title: "Delete",
+        //     width: '7%',
+        //     render: (id: any) => (
+        //         <Tooltip placement="topLeft" title='Delete' arrowPointAtCenter>
+        //             <img src={Icons.Delete} alt='ellipsis-vertical' style={{ height: '25px', cursor: 'pointer' }}
+        //                 onClick={() => showDelteConfirm(id)} />
+        //         </Tooltip>
+        //     ),
+        // }
     ];
 
     useEffect(() => {
