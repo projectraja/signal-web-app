@@ -1,4 +1,4 @@
-import { List, Modal, Tag, Tooltip, Typography } from "antd";
+import { Modal, Tooltip } from "antd";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -8,12 +8,12 @@ import { CustomTable, Loader, PageTransition, SubHeader } from "../../components
 import { ITableColumn } from "../../interface/IComponent";
 import RootStore from "../../mobx-store/RootStore";
 import StationHelper from "../../helpers/StationHelper";
-import CustomModal from "../../components/CustomModal";
+import SectionHelper from "../../helpers/SectionHelper";
 
 const { confirm } = Modal;
 
 const Station: React.FC = () => {
-    const { stationStore } = RootStore;
+    const { stationStore, sectionStore } = RootStore;
     const navigate = useNavigate();
     const columns: ITableColumn[] = [
         {
@@ -37,19 +37,8 @@ const Station: React.FC = () => {
         {
             key: "name",
             title: "Station Name",
-            width: '24%',
+            width: '63%',
             isTrim: true
-        },
-        {
-            key: "welcomeNotes",
-            title: "Welcome Notes",
-            width: '22%',
-            isTrim: true
-        },
-        {
-            key: "adContact",
-            title: "AD Contact",
-            width: '17%'
         },
         {
             key: "id",
@@ -75,11 +64,15 @@ const Station: React.FC = () => {
     ];
 
     useEffect(() => {
-        GetStationss();
+        GetStations();
     }, []);
 
-    const GetStationss = async () => {
-        await StationHelper(navigate).GetStations();
+    const GetStations = async () => {
+        await SectionHelper(navigate).GetSections();
+        if (sectionStore.sections?.length > 0) {
+            stationStore.selectedSectionId = sectionStore.sections[0]?.id;
+            await StationHelper(navigate).GetStations();
+        }
     }
 
     const onChangePage = async (page: number) => {
@@ -128,14 +121,12 @@ const Station: React.FC = () => {
         });
     };
 
-    const onSelectCurrentStation = (currentStationId = 0) => {
-        stationStore.id = currentStationId;
-    }
-
     return <PageTransition>
         <div>
             <SubHeader
                 title="Stations" count={stationStore.size} addBtn addBtnText='Add Station'
+                dropdown dropdownText="Section" dropdownList={sectionStore.sections || []} dropdownValue={stationStore.selectedSectionId}
+                dropdownKey={'id'} dropdownLabel={'sectionName'}
                 search onAddClick={navigateToAdd} isLoading={stationStore?.isLoading}
                 searchStr={stationStore?.searchStr} onChangeSearch={onChangeSearch}
                 onSubmitSearch={onSubmitSearch}
@@ -145,27 +136,6 @@ const Station: React.FC = () => {
                 defaultPaginationCurrent={1} paginationCurrent={stationStore?.page}
                 paginationTotal={stationStore?.totalItems}
                 onPageChange={onChangePage} isLoading={stationStore?.isLoading} />
-            {stationStore.id === 0 &&
-                <CustomModal title="Select Station" isOpen={true}>
-                    <small>Please select station to continue</small>
-                    <List
-                        header={<div className="d-flex mt-2 mb-1" style={{ fontWeight: 'bold' }}>
-                            <div className="col-3">Code</div>
-                            <div className="col-9">Name</div>
-                        </div>}
-                        bordered
-                        className="mt-2"
-                        dataSource={stationStore.stations}
-                        renderItem={(station) => (
-                            <List.Item onClick={() => onSelectCurrentStation(station?.id)}>
-                                <div className="col-3">{station?.code}</div>
-                                <div className="col-9">{station?.name}</div>
-                            </List.Item>
-                        )}
-                    />
-
-                </CustomModal>
-            }
             <Loader visibility={stationStore?.isLoading} />
         </div>
     </PageTransition>

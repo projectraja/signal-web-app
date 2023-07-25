@@ -21,8 +21,6 @@ const Login: React.FC = () => {
 
         if (name === 'empId') {
             authStore.empId = value;
-        } else {
-            authStore.password = value;
         }
         if (!isValidForm) {
             authStore.isValidLoginForm();
@@ -51,20 +49,12 @@ const Login: React.FC = () => {
                                         <img src={Images.BrandLogoWithName} alt="Login Logo" style={{ width: '210px', height: '175px' }} />
                                     </div>
                                     <div className="row justify-content-center">
-                                        <div className="text-center mb-3 mt-2 text-secondary">Login to your account</div>
+                                        <div className="text-center mb-3 mt-2 text-secondary">Generate OTP</div>
                                     </div>
 
                                     <FormGroup isRequired label='Employee Id' error={authStore?.formLoginErrors?.empId}>
                                         <Input name='empId' placeholder="Employee Id" prefix={<UserOutlined />}
                                             className='login-input' autoComplete="off" onChange={onChangeValue} value={authStore?.empId}
-                                        />
-                                    </FormGroup>
-
-                                    <FormGroup isRequired label='Password' error={authStore?.formLoginErrors?.password}>
-                                        <Input.Password name='password' placeholder="Password" prefix={<LockOutlined />}
-                                            className='login-input' autoComplete="off"
-                                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                            onChange={onChangeValue} value={authStore?.password}
                                         />
                                     </FormGroup>
 

@@ -4,16 +4,17 @@ import RootStore from "../mobx-store/RootStore";
 import Endpoints from "../services/Endpoints";
 import HttpClient from "../services/HttpClient";
 import SecureService from "../services/SecureService";
-import StationHelper from "./StationHelper";
+import { ILoginRes, IOTPVerificationRes } from "../interface/ILogin";
+import { IRoleRes } from "../interface/IRole";
+import { IDesignationRes } from "../interface/IDesignation";
 
 const AuthHelper = () => {
-    let { authStore, stationStore } = RootStore;
+    let { authStore } = RootStore;
 
     const Login = async (navigate: NavigateFunction, logoutCb: any) => {
-        let resLogin: any;
+        let resLogin: ILoginRes;
         const loginPostData = {
-            empId: authStore?.empId,
-            password: authStore?.password
+            empId: authStore?.empId
         };
 
         authStore.isLoading = true;
@@ -21,14 +22,18 @@ const AuthHelper = () => {
         authStore.isLoading = false;
 
         if (resLogin?.status === 'OK') {
-            authStore.userId = 0;
+            authStore.isOTPGenerated = true;
+            authStore.userId = resLogin?.data?._id || '';
             message.success(resLogin?.message, 5);
-            navigate('/otp-verification', { replace: true });
+            navigate('/otp-verification');
+        } else {
+            authStore.isOTPGenerated = false;
+            authStore.userId = '';
         }
     }
 
     const OTPVerification = async (navigate: NavigateFunction, logoutCb: any) => {
-        let resLogin: any;
+        let resLogin: IOTPVerificationRes;
         const loginPostData = {
             userId: authStore.userId,
             otp: authStore.loginOTP
@@ -40,20 +45,22 @@ const AuthHelper = () => {
 
         if (resLogin?.status === 'OK') {
             authStore.isLoggedIn = true;
+            authStore.setProfileInfo(resLogin?.data)
             message.success(resLogin?.message, 5);
-            navigate('/user', { replace: true });
+            navigate('/employee', { replace: true });
+        } else {
+            authStore.isLoggedIn = false;
         }
     }
 
     const CreateEmployee = async (navigate?: NavigateFunction) => {
         let resRegistration;
         const registrationPostData = {
-            name: authStore.userName,
-            empId: authStore.userEmpId,
-            email: authStore.userMail,
-            password: authStore.userPassword,
-            phone: authStore.userMobile,
-            roleId: authStore.userRoleId,
+            name: authStore.employeeName,
+            empId: authStore.employeeId,
+            email: authStore.employeeMail,
+            phone: authStore.employeeMobile,
+            roleId: authStore.employeeRoleId,
         }
 
         authStore.isLoading = true;
@@ -68,13 +75,12 @@ const AuthHelper = () => {
     const UpdateEmployee = async (navigate?: NavigateFunction) => {
         let resAdminUpdate;
         const updatePostData = {
-            id: authStore?.selectedUserId,
-            name: authStore.userName,
-            empId: authStore.userEmpId,
-            email: authStore.userMail,
-            password: authStore.userPassword,
-            phone: authStore.userMobile,
-            roleId: authStore.userRoleId,
+            id: authStore?.selectedEmployeeId,
+            name: authStore.employeeName,
+            empId: authStore.employeeId,
+            email: authStore.employeeMail,
+            phone: authStore.employeeMobile,
+            roleId: authStore.employeeRoleId,
         };
 
         authStore.isLoading = true;
@@ -99,7 +105,7 @@ const AuthHelper = () => {
     }
 
     const GetRoles = async (navigate: NavigateFunction) => {
-        let resAdminUsers: any;
+        let resAdminUsers: IRoleRes;
 
         authStore.isLoading = true;
         resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.Roles);
@@ -107,6 +113,18 @@ const AuthHelper = () => {
 
         if (resAdminUsers?.status === 'OK') {
             authStore.roles = resAdminUsers?.data;
+        }
+    }
+
+    const GetDesignations = async (navigate: NavigateFunction) => {
+        let resAdminUsers: IDesignationRes;
+
+        authStore.isLoading = true;
+        resAdminUsers = await SecureService(navigate).GetResponse(Endpoints.Designation);
+        authStore.isLoading = false;
+
+        if (resAdminUsers?.status === 'OK') {
+            authStore.designations = resAdminUsers?.data;
         }
     }
 
@@ -122,7 +140,7 @@ const AuthHelper = () => {
         }
     }
 
-    return { Login, OTPVerification, CreateEmployee, UpdateEmployee, GetEmployees, GetRoles, GetSections };
+    return { Login, OTPVerification, CreateEmployee, UpdateEmployee, GetEmployees, GetRoles, GetDesignations, GetSections };
 }
 
 export default AuthHelper;

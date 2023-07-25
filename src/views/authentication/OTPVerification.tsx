@@ -1,7 +1,6 @@
 import { FormGroup, Loader, PageTransition } from "../../components";
 import { Images } from "../../constant/Images";
 import { Button, Input } from 'antd';
-import { EyeTwoTone, EyeInvisibleOutlined, UserOutlined, LockOutlined } from '@ant-design/icons';
 import AuthHelper from "../../helpers/AuthHelper";
 import { observer } from 'mobx-react-lite';
 import RootStore from "../../mobx-store/RootStore";
@@ -54,7 +53,7 @@ const OTPVerification: React.FC = () => {
                                     </div>
 
                                     <FormGroup isRequired label='OTP' error={authStore?.formLoginOTPErrors.loginOTP}>
-                                        <Input name='loginOTP' placeholder="Login OTP"
+                                        <Input name='loginOTP' placeholder="Login OTP" maxLength={5}
                                             className='login-input' autoComplete="off" onChange={onChangeValue} value={authStore?.loginOTP}
                                         />
                                     </FormGroup>

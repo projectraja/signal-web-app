@@ -46,10 +46,9 @@ const Router = () => {
 
   return <Routes>
     <Route path='login' element={<CustomSuspense><Login /></CustomSuspense>} />
-    <Route path='otp-verification' element={<CustomSuspense><OTPVerification /></CustomSuspense>} />
+    <Route path='otp-verification' element={(authStore.isOTPGenerated) ? <CustomSuspense><OTPVerification /></CustomSuspense> : <Navigate to={'/login'} replace />} />
     <Route path='loader' element={<CustomSuspense><Loader visibility={true} /></CustomSuspense>} />
-    {/* <Route path='/' element={(authStore.isLoggedIn && FunctionUtil.isValidJWTToken()) ? <Layout /> : <Navigate to={'login'} replace />}> */}
-    <Route path='/' element={<Layout />}>
+    <Route path='/' element={(authStore.isLoggedIn && FunctionUtil.isValidJWTToken()) ? <Layout /> : <Navigate to={'/login'} replace />}>
       {_routes()?.GetByRole() && _routes()?.GetByRole()?.map((route, routeIndex) => {
         return <Route key={routeIndex} path={route?.path} element={<CustomSuspense><route.element /></CustomSuspense>} />
       })}

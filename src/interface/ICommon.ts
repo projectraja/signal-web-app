@@ -39,3 +39,10 @@ export interface ITabRoutesProps {
     tabChildren?: ITabRoutesProps[]
     icon: string
 }
+
+export interface IHttpRes {
+    timeStamp: string
+    code: number
+    status: string
+    message: string
+}

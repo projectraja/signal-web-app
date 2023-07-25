@@ -40,7 +40,7 @@ const HttpClient = (navigate: NavigateFunction | any = null) => {
                 } else if (getResp.status === 403) {
                     message.warning(getMsg ? getMsg : "You do not have permission", 5);
                 } else if (getResp.status === 404) {
-                    message.warning(getMsg ? getMsg : "User not found!!!", 5);
+                    message.warning(getMsg ? getMsg : "Account not found!!!", 5);
                 } else if (getResp.status === 500) {
                     message.warning(getMsg ? getMsg : "Something went wrong, Please try again later", 5);
                 }
@@ -82,7 +82,7 @@ const HttpClient = (navigate: NavigateFunction | any = null) => {
                 } else if (postResp.status === 403) {
                     message.warning(postMsg ? postMsg : "You do not have permission", 5);
                 } else if (postResp.status === 404) {
-                    message.warning(postMsg ? postMsg : "User not found!!!", 5);
+                    message.warning(postMsg ? postMsg : "Account not found!!!", 5);
                 } else if (postResp.status === 500) {
                     message.warning(postMsg ? postMsg : "Something went wrong, Please try again later", 5);
                 }

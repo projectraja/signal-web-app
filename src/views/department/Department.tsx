@@ -7,12 +7,12 @@ import { Icons } from "../../constant/Icons";
 import { CustomTable, Loader, PageTransition, SubHeader } from "../../components";
 import { ITableColumn } from "../../interface/IComponent";
 import RootStore from "../../mobx-store/RootStore";
-import AuthHelper from "../../helpers/AuthHelper";
+import DepartmentHelper from "../../helpers/DepartmentHelper";
 
 const { confirm } = Modal;
 
-const Employee: React.FC = () => {
-    const { authStore } = RootStore;
+const Department: React.FC = () => {
+    const { departmentStore } = RootStore;
     const navigate = useNavigate();
     const columns: ITableColumn[] = [
         {
@@ -22,24 +22,9 @@ const Employee: React.FC = () => {
             align: 'center'
         },
         {
-            key: "empId",
-            title: "Id",
-            width: '12%'
-        },
-        {
-            key: "name",
-            title: "Name",
-            width: '23%'
-        },
-        {
-            key: "phone",
-            title: "Mobile No",
-            width: '17%'
-        },
-        {
-            key: "email",
-            title: "E-mail",
-            width: '23%',
+            key: "department",
+            title: "Department Name",
+            width: '66%',
             isTrim: true
         },
         {
@@ -74,29 +59,25 @@ const Employee: React.FC = () => {
     ];
 
     useEffect(() => {
-        getAll();
+        GetDepartmentss();
     }, []);
 
-    const getAll = async () => {
-        await AuthHelper().GetEmployees(navigate);
-    }
-
-    const onChangePage = async (page: number) => {
-        authStore.page = page - 1;
-        await AuthHelper().GetEmployees(navigate);
+    const GetDepartmentss = async () => {
+        await DepartmentHelper(navigate).GetDepartments();
     }
 
     const onDelete = async (id: any) => {
-        // await AuthHelper().DeleteAdminUser(id);
+        await DepartmentHelper(navigate).DeleteDepartment(id);
     }
 
     const onUpdate = (id: any) => {
-        authStore.setEmployeeValues(id);
+        departmentStore.setDepartmentValues(id);
         navigate(id?.toString());
     }
 
     const navigateToAdd = () => {
         navigate('add');
+        departmentStore.resetPostData();
     }
 
     const showDelteConfirm = (id: any) => {
@@ -116,17 +97,16 @@ const Employee: React.FC = () => {
     return <PageTransition>
         <div>
             <SubHeader
-                title="Employees" count={authStore.size} addBtn addBtnText='Create New Employee'
-                onAddClick={navigateToAdd} isLoading={authStore?.isLoading}
+                title="Departments" count={1} addBtn addBtnText='Add Department'
+                search onAddClick={navigateToAdd} isLoading={departmentStore?.isLoading}
             />
-            <CustomTable columns={columns}
-                datas={authStore?.employees}
-                defaultPaginationCurrent={1} paginationCurrent={authStore?.page}
-                paginationTotal={authStore?.totalItems}
-                onPageChange={onChangePage} isLoading={authStore?.isLoading} />
-            <Loader visibility={authStore?.isLoading} />
+            <CustomTable
+                columns={columns} datas={departmentStore?.departments}
+                defaultPaginationCurrent={1} paginationCurrent={1}
+                paginationTotal={1} isLoading={departmentStore?.isLoading} />
+            <Loader visibility={departmentStore?.isLoading} />
         </div>
     </PageTransition>
 }
 
-export default observer(Employee);
+export default observer(Department);

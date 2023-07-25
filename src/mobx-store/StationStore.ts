@@ -1,17 +1,18 @@
 import { action, makeObservable, observable } from "mobx";
 import Messages from "../constant/Messages";
+import { IStationData } from "../interface/IStation";
 
 export default class StationStore {
-    @observable stations: any[] = [];
+    @observable stations: IStationData[] = [];
     @observable currentStation: any = {};
     @observable page: number = 0;
     @observable size: number = 10;
     @observable totalItems: number = 0;
     @observable id: any = 0;
+    @observable selectedSectionId: string = '';
     @observable code: string = '';
     @observable name: string = '';
-    @observable welcomeNotes: string = '';
-    @observable adContact: string = '';
+    @observable sectionId: string = '';
     @observable searchStr: string = '';
     @observable isLoading: boolean = false;
     @observable formCreateStationErrors: any = {};
@@ -28,35 +29,25 @@ export default class StationStore {
 
     @action resetPostData() {
         this.id = 0;
+        this.selectedSectionId = '';
         this.page = 0;
         this.size = 10;
         this.totalItems = 0;
         this.code = '';
         this.name = '';
-        this.welcomeNotes = '';
-        this.adContact = '';
+        this.sectionId = ''
         this.searchStr = '';
         this.isLoading = false;
         this.formCreateStationErrors = {};
     }
 
     @action setStationValues = (id: any) => {
-        const selectedStation: any = this.stations?.find((station:any)=> station?.id === id);
+        const selectedStation = this.stations?.find((station:any)=> station?.id === id);
 
         this.id = selectedStation?.id;
-        this.code = selectedStation?.code;
-        this.name = selectedStation?.name;
-        this.welcomeNotes = selectedStation?.welcomeNotes;
-        this.adContact = selectedStation?.adContact;
-        this.formCreateStationErrors = {};
-    }
-
-    @action setCurrentStationValues = () => {
-        this.id = this.currentStation?.id;
-        this.code = this.currentStation?.code;
-        this.name = this.currentStation?.name;
-        this.welcomeNotes = this.currentStation?.welcomeNotes;
-        this.adContact = this.currentStation?.adContact;
+        this.code = selectedStation?.stationCode || '';
+        this.name = selectedStation?.stationName || '';
+        this.sectionId = selectedStation?.sectionId || '';
         this.formCreateStationErrors = {};
     }
 

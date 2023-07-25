@@ -11,6 +11,8 @@ interface ISubHeaderProps {
     dropdown?: boolean
     dropdownText?: string
     dropdownValue?: any
+    dropdownKey?: any
+    dropdownLabel?: any
     dropdownList?: any[]
     onChangeDropdown?: any
     onClickDropdown?: any
@@ -23,7 +25,8 @@ interface ISubHeaderProps {
 }
 
 const SubHeader: React.FC<ISubHeaderProps> = (props) => {
-    const { title, subTitle, count, addBtn, addBtnText, dropdown, dropdownText, search, filterBtn, searchStr, isLoading } = props;
+    const { title, subTitle, count, addBtn, addBtnText, dropdown, dropdownText, search, filterBtn, searchStr, isLoading,
+        dropdownKey, dropdownLabel } = props;
     const { Option } = Select;
 
     return <div className="row align-items-center mb-2" style={{ height: subTitle ? '3.5rem' : '2.5rem', justifyContent: 'space-between' }}>
@@ -35,22 +38,22 @@ const SubHeader: React.FC<ISubHeaderProps> = (props) => {
             }
         </div>
         <div className="col-9 d-flex justify-content-end">
-            {dropdown &&
+            {(dropdown && props.dropdownList && props.dropdownList?.length > 0) &&
                 <div className="px-1">
                     <Select
-                        showSearch placeholder={dropdownText} className="custom-sub-header-select"
-                        optionFilterProp="children" style={{ width: '100%' }}
-                        filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
-                        filterSort={(optionA, optionB) =>
-                            (optionA!.children as unknown as string)
-                                .toLowerCase()
-                                .localeCompare((optionB!.children as unknown as string).toLowerCase())
-                        }
+                        placeholder={dropdownText} className="custom-sub-header-select"
+                        // optionFilterProp="children" style={{ width: '100%' }}
+                        // filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
+                        // filterSort={(optionA, optionB) =>
+                        //     (optionA!.children as unknown as string)
+                        //         .toLowerCase()
+                        //         .localeCompare((optionB!.children as unknown as string).toLowerCase())
+                        // }
                         defaultValue={props?.dropdownValue} onChange={(value) => props.onChangeDropdown(value)}
                         onClick={() => props?.onClickDropdown()}
                     >
                         {props?.dropdownList?.map((dropdown: any, index: any) => {
-                            return <Option key={index} value={dropdown?.id}>{dropdown?.name}</Option>
+                            return <Option key={index} value={dropdown[dropdownKey]}>{dropdown[dropdownLabel]}</Option>
                         })}
                     </Select>
                 </div>

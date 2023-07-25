@@ -2,6 +2,7 @@ const Messages = {
     NoInternet: 'Please check internet connection',
     EmptyFullName: 'Please enter full name',
     EmptyRoleId: 'Please select role',
+    EmptyDesignationId: 'Please select designation',
     EmptyEmpId: 'Please enter employee Id',
     InvalidEmail: 'Please enter valid e-mail',
     EmptyPhone: 'Please enter phone number',
@@ -13,7 +14,7 @@ const Messages = {
     InvalidPassword: 'Password minimum 5 characters long',
     ConfirmPasswordMismatch: 'Confirm password does not match',
     EmptyOTP: 'Please enter the OTP',
-    InvalidOTP: 'OTP should be 5 digits long',
+    InvalidOTP: 'OTP field must be 5 characters long',
     EmptyStationCode: 'Please enter station code',
     EmptyStationName: 'Please enter station name',
     EmptyPlatformNumber: 'Please enter platform number',
@@ -34,7 +35,10 @@ const Messages = {
     EmptyVideoFile: 'Please enter video file',
     EmptyDisplayName: 'Please enter display name',
     EmptyDisplayPlatformId: 'Please select platform id',
-    EmptyLanguageName: 'Please enter language'
+    EmptyLanguageName: 'Please enter language',
+
+    EmptySectionName: 'Please enter section name',
+    EmptyDepartmentName: 'Please enter department name'
 }
 
 export default Messages;

@@ -22,24 +22,20 @@ const AddEmployee: React.FC = () => {
     }, []);
 
     const getAll = async () => {
-        await AuthHelper().GetRoles(navigate);
+        await AuthHelper().GetDesignations(navigate);
     }
 
     const onChangeValue = (event: any, name: string) => {
         event.preventDefault();
         let { value } = event.target;
         if (name === 'name') {
-            authStore.userName = value;
+            authStore.employeeName = value;
         } else if (name === 'empId') {
-            authStore.userEmpId = value;
+            authStore.employeeId = value;
         }else if (name === 'phone') {
-            authStore.userMobile = value;
+            authStore.employeeMobile = value;
         }else if (name === 'email') {
-            authStore.userMail = value;
-        } else if (name === 'password') {
-            authStore.userPassword = value;
-        } else if (name === 'confirmPassword') {
-            authStore.userConfirmPassword = value;
+            authStore.employeeMail = value;
         }
         if (!isValidForm) {
             authStore.isValidEmployeeRegistrationForm();
@@ -47,8 +43,8 @@ const AddEmployee: React.FC = () => {
     }
 
     const onChangeSelectValue = (value: any, name: string = '') => {
-        if (name === 'roleId') {
-            authStore.userRoleId = value;
+        if(name === 'designationId') {
+            authStore.designationId = value;
         }
         if (!isValidForm) {
             authStore.isValidEmployeeRegistrationForm();
@@ -78,11 +74,11 @@ const AddEmployee: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
-                    <FormGroup isRequired label='Role' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userRoleId}>
-                        <Select placeholder="Select Role" className="custom-input" style={{ width: '100%' }}
-                            onChange={(value) => onChangeSelectValue(value, 'roleId')}>
-                            {authStore.roles?.map((role: any, index: any) => {
-                                return <Option key={index} value={role?.id}>{role?.roleName}</Option>
+                    <FormGroup isRequired label='Designation' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.designationId}>
+                        <Select placeholder="Select Designation" className="custom-input" style={{ width: '100%' }}
+                            onChange={(value) => onChangeSelectValue(value, 'designationId')}>
+                            {authStore.designations?.map((designation, index: any) => {
+                                return <Option key={index} value={designation?.id}>{designation?.designation}</Option>
                             })}
                         </Select>
                     </FormGroup>
@@ -90,43 +86,29 @@ const AddEmployee: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
-                    <FormGroup isRequired label='Name' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userName}>
-                        <Input placeholder="Name" style={{ width: '100%' }} value={authStore.userName}
+                    <FormGroup isRequired label='Name' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeName}>
+                        <Input placeholder="Name" style={{ width: '100%' }} value={authStore.employeeName}
                             onChange={(event) => onChangeValue(event, 'name')} />
                     </FormGroup>
                 </div>
                 <div className="col-4">
-                    <FormGroup isRequired label='Employee Id' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userEmpId}>
-                        <Input placeholder="Employee Id" style={{ width: '100%' }} value={authStore.userEmpId}
+                    <FormGroup isRequired label='Employee Id' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeId}>
+                        <Input placeholder="Employee Id" style={{ width: '100%' }} value={authStore.employeeId}
                             onChange={(event) => onChangeValue(event, 'empId')} />
                     </FormGroup>
                 </div>
             </div>
             <div className="row">
                 <div className="col-4">
-                    <FormGroup isRequired label='Phone' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userMobile}>
-                        <Input type='tel' placeholder="Phone" style={{ width: '100%' }} value={authStore.userMobile}
+                    <FormGroup isRequired label='Phone' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMail}>
+                        <Input type='tel' placeholder="Phone" style={{ width: '100%' }} value={authStore.employeeMail}
                             onChange={(event) => onChangeValue(event, 'phone')} />
                     </FormGroup>
                 </div>
                 <div className="col-4">
-                    <FormGroup isRequired label='Email' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userMail}>
-                        <Input type='email' placeholder="Email" style={{ width: '100%' }} value={authStore.userMail}
+                    <FormGroup isRequired label='Email' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.employeeMobile}>
+                        <Input type='email' placeholder="Email" style={{ width: '100%' }} value={authStore.employeeMobile}
                             onChange={(event) => onChangeValue(event, 'email')} />
-                    </FormGroup>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
-                    <FormGroup isRequired label='Password' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userPassword}>
-                        <Input placeholder="Password" style={{ width: '100%' }} value={authStore.userPassword}
-                            onChange={(event) => onChangeValue(event, 'password')} />
-                    </FormGroup>
-                </div>
-                <div className="col-4">
-                    <FormGroup isRequired label='Confirm Password' labelSpacing='mb-1' error={authStore?.formEmployeeRegistrationErrors?.userConfirmPassword}>
-                        <Input placeholder="Confirm Password" style={{ width: '100%' }} value={authStore.userConfirmPassword}
-                            onChange={(event) => onChangeValue(event, 'confirmPassword')} />
                     </FormGroup>
                 </div>
             </div>

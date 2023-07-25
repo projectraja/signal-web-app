@@ -1,16 +1,26 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import RootStore from '../../mobx-store/RootStore';
 import { PageTransition, FormGroup, Loader } from '../../components';
-import TextArea from 'antd/es/input/TextArea';
 import StationHelper from '../../helpers/StationHelper';
+import SectionHelper from '../../helpers/SectionHelper';
+import { useEffect } from 'react';
 
 let isValidForm: boolean = true;
+const { Option } = Select;
 
 const UpdateStation: React.FC = () => {
-    const { stationStore } = RootStore;
+    const { stationStore, sectionStore } = RootStore;
     const navigate = useNavigate();
+
+    useEffect(() => {
+        getSections();
+    }, [])
+
+    const getSections = async () => {
+        await SectionHelper(navigate).GetSections();
+    }
 
     const onChangeValue = (event: React.ChangeEvent<any>, name: string = '') => {
         event.preventDefault();
@@ -20,10 +30,17 @@ const UpdateStation: React.FC = () => {
             stationStore.code = value?.toUpperCase();
         } else if (name === 'name') {
             stationStore.name = value;
-        } else if (name === 'welcomeNotes') {
-            stationStore.welcomeNotes = value;
-        } else if (name === 'adContact') {
-            stationStore.adContact = value;
+        } else if (name === 'sectionId') {
+            stationStore.sectionId = value;
+        }
+        if (!isValidForm) {
+            stationStore.isValidCreateStationForm();
+        }
+    }
+
+    const onChangeSelectValue = (value: any, name: string = '') => {
+        if (name === 'sectionId') {
+            stationStore.sectionId = value;
         }
         if (!isValidForm) {
             stationStore.isValidCreateStationForm();
@@ -53,6 +70,19 @@ const UpdateStation: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
+                <FormGroup isRequired label='Select Section' labelSpacing='mb-1'
+                        error={stationStore?.formCreateStationErrors?.platformId}>
+                        <Select placeholder='Select Section' className="custom-input"
+                            style={{ width: '100%' }} onChange={(value) => onChangeSelectValue(value, 'sectionId')}>
+                            {sectionStore.sections?.map((section, index: any) => {
+                                return <Option key={index} value={1}>{section?.sectionName}</Option>
+                            })}
+                        </Select>
+                    </FormGroup>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-4">
                     <FormGroup isRequired label='Station Code' labelSpacing='mb-1' error={stationStore?.formCreateStationErrors?.code}>
                         <Input placeholder="MDU" autoComplete="off"
                             onChange={(event) => onChangeValue(event, 'code')} value={stationStore?.code} />
@@ -62,20 +92,6 @@ const UpdateStation: React.FC = () => {
                     <FormGroup isRequired label='Station Name' labelSpacing='mb-1' error={stationStore?.formCreateStationErrors?.name}>
                         <Input placeholder="Name" autoComplete="off"
                             onChange={(event) => onChangeValue(event, 'name')} value={stationStore?.name} />
-                    </FormGroup>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
-                    <FormGroup label='Advertisement Contact' labelSpacing='mb-1'>
-                        <Input placeholder="Contact" autoComplete="off" autoCapitalize='true'
-                            onChange={(event) => onChangeValue(event, 'adContact')} value={stationStore?.adContact} />
-                    </FormGroup>
-                </div>
-                <div className="col-4">
-                    <FormGroup label='Welcome Notes' labelSpacing='mb-1'>
-                        <TextArea placeholder="Welcome Notes" autoComplete="off"
-                            onChange={(event) => onChangeValue(event, 'welcomeNotes')} value={stationStore?.welcomeNotes} />
                     </FormGroup>
                 </div>
             </div>
