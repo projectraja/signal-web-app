@@ -99,7 +99,7 @@ const Department: React.FC = () => {
         <div>
             <SubHeader
                 title="Departments" count={1} addBtn addBtnText='Add Department'
-                search onAddClick={navigateToAdd} isLoading={departmentStore?.isLoading}
+                onAddClick={navigateToAdd} isLoading={departmentStore?.isLoading}
             />
             <CustomTable
                 columns={columns} datas={departmentStore?.departments}

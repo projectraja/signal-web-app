@@ -72,10 +72,10 @@ const UpdateStation: React.FC = () => {
                 <div className="col-4">
                 <FormGroup isRequired label='Select Section' labelSpacing='mb-1'
                         error={stationStore?.formCreateStationErrors?.platformId}>
-                        <Select placeholder='Select Section' className="custom-input"
+                        <Select placeholder='Select Section' className="custom-input" defaultValue={stationStore.sectionId}
                             style={{ width: '100%' }} onChange={(value) => onChangeSelectValue(value, 'sectionId')}>
                             {sectionStore.sections?.map((section, index: any) => {
-                                return <Option key={index} value={1}>{section?.sectionName}</Option>
+                                return <Option key={index} value={section?.id}>{section?.sectionName}</Option>
                             })}
                         </Select>
                     </FormGroup>

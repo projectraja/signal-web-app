@@ -65,14 +65,13 @@ const StationHelper = (navigate: NavigateFunction) => {
     const UpdateStation = async () => {
         let resUpdateStation: any;
         const stationUpdateObj = {
-            'id': stationStore?.id,
-            'sectionId': sectionStore?.id,
+            'sectionId': stationStore?.sectionId,
             'stationName': stationStore?.name,
             'stationCode': stationStore?.code
         }
 
         stationStore.isLoading = true;
-        resUpdateStation = await SecureService(navigate).PostResponse(Endpoints.Station, 'PUT', stationUpdateObj);
+        resUpdateStation = await SecureService(navigate).PostResponse(Endpoints.Station + '/' + stationStore?.id, 'PUT', stationUpdateObj);
         stationStore.isLoading = false;
 
         if (resUpdateStation?.status === 'UPDATED') {

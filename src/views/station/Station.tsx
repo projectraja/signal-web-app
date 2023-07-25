@@ -23,21 +23,15 @@ const Station: React.FC = () => {
             align: 'center'
         },
         {
-            key: "id",
-            title: "Station Key",
-            width: '12%',
-            align: 'center'
-        },
-        {
-            key: "code",
+            key: "stationCode",
             title: "Code",
-            width: '13%',
+            width: '15%',
             align: 'center'
         },
         {
-            key: "name",
+            key: "stationName",
             title: "Station Name",
-            width: '69%',
+            width: '72%',
             isTrim: true
         },
         {
@@ -134,7 +128,7 @@ const Station: React.FC = () => {
                 title="Stations" count={stationStore.size} addBtn addBtnText='Add Station'
                 dropdown dropdownText="Section" dropdownList={sectionStore.sections || []} dropdownValue={stationStore.selectedSectionId}
                 dropdownKey={'id'} dropdownLabel={'sectionName'} onChangeDropdown={onChangeSection}
-                search onAddClick={navigateToAdd} isLoading={stationStore?.isLoading}
+                onAddClick={navigateToAdd} isLoading={stationStore?.isLoading}
                 searchStr={stationStore?.searchStr} onChangeSearch={onChangeSearch}
                 onSubmitSearch={onSubmitSearch}
             />

@@ -104,6 +104,30 @@ const Routes: IRoutesProps[] = [
         path: 'employee/:id', name: '', element: UpdateEmployee, icon: 'Admin',
         children: [], roles:  ['']
     },
+    {
+        path: 'geas-type', name: 'Gear Types', element: Employee, icon: 'GearType',
+        children: [], roles: ['']
+    },
+    {
+        path: 'geas-type/add', name: '', element: AddEmployee, icon: 'GearType',
+        children: [], roles: ['']
+    },
+    {
+        path: 'geas-type/:id', name: '', element: UpdateEmployee, icon: 'GearType',
+        children: [], roles:  ['']
+    },
+    {
+        path: 'gear', name: 'Gears', element: Employee, icon: 'Gear',
+        children: [], roles: ['']
+    },
+    {
+        path: 'gear/add', name: '', element: AddEmployee, icon: 'Gear',
+        children: [], roles: ['']
+    },
+    {
+        path: 'gear/:id', name: '', element: UpdateEmployee, icon: 'Gear',
+        children: [], roles:  ['']
+    },
 ];
 
 const GetRoutes = () => {

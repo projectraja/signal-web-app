@@ -45,6 +45,7 @@ export default class StationStore {
         const selectedStation = this.stations?.find((station:any)=> station?.id === id);
 
         this.id = selectedStation?.id;
+        this.sectionId = selectedStation?.sectionId || '';
         this.code = selectedStation?.stationCode || '';
         this.name = selectedStation?.stationName || '';
         this.sectionId = selectedStation?.sectionId || '';

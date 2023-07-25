@@ -13,8 +13,10 @@ import Roles from '../assets/svgs/role.svg';
 import Department from '../assets/svgs/department.svg';
 import Designation from '../assets/svgs/designation.svg';
 import LevelCrossing from '../assets/svgs/level-crossing.svg';
+import GearType from '../assets/svgs/gear-type.svg';
+import Gear from '../assets/svgs/gear.svg';
 
 export const SVGs: any = {
     Dashboard, Station, Admin, Train, Platform, Flyover, Assign, Advertisement, Display, Language,
-    Sections, Roles, Department, Designation, LevelCrossing
+    Sections, Roles, Department, Designation, LevelCrossing, GearType, Gear
 }

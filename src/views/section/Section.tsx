@@ -98,7 +98,7 @@ const Section: React.FC = () => {
         <div>
             <SubHeader
                 title="Sections" count={1} addBtn addBtnText='Add Section'
-                search onAddClick={navigateToAdd} isLoading={sectionStore?.isLoading}
+                onAddClick={navigateToAdd} isLoading={sectionStore?.isLoading}
             />
             <CustomTable
                 columns={columns} datas={sectionStore?.sections}

@@ -15,7 +15,9 @@ const Endpoints = {
     Station: '/station',
     Section: '/section',
     Department: '/department',
-    Designation: '/designation'
+    Designation: '/designation',
+    GearType: '/gear-type',
+    Gear: '/gear'
 }
 
 export default Endpoints;
