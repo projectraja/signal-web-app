@@ -70,7 +70,7 @@ const AddStation: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-4">
-                <FormGroup isRequired label='Select Section' labelSpacing='mb-1'
+                    <FormGroup isRequired label='Select Section' labelSpacing='mb-1'
                         error={stationStore?.formCreateStationErrors?.platformId}>
                         <Select placeholder='Select Section' className="custom-input"
                             style={{ width: '100%' }} onChange={(value) => onChangeSelectValue(value, 'sectionId')}>

@@ -12,7 +12,7 @@ const GearHelper = (navigate: NavigateFunction) => {
         let resGears: IGearRes;
 
         gearStore.isLoading = true;
-        resGears = await SecureService(navigate).GetResponse(Endpoints.Gear);
+        resGears = await SecureService(navigate).GetResponse(Endpoints.Gear + '?gearTypeId=' + gearStore.selectedGearTypeId);
         gearStore.isLoading = false;
 
         if (resGears?.status === 'OK') {

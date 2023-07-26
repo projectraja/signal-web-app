@@ -8,6 +8,7 @@ export default class GearStore {
     @observable gearTypeId: string = '';
     @observable stationId: string = '';
     @observable name: string = '';
+    @observable selectedGearTypeId: string = '';
     @observable isActive: boolean = false;
     @observable isLoading: boolean = false;
     @observable formCreateGearErrors: any = {};
@@ -18,6 +19,7 @@ export default class GearStore {
 
     @action resetData() {
         this.gears = [];
+        this.selectedGearTypeId = '';
         this.resetPostData();
     }
 

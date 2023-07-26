@@ -43,7 +43,6 @@ const DesignationHelper = (navigate: NavigateFunction) => {
     const UpdateDesignation = async () => {
         let resUpdateDesignation: any;
         const designationUpdateObj = {
-            'id': designationStore?.id,
             'designation': designationStore?.name,
             "departmentId": designationStore.departmentId,
             "roleId": designationStore.roleId,
@@ -51,7 +50,7 @@ const DesignationHelper = (navigate: NavigateFunction) => {
         }
 
         designationStore.isLoading = true;
-        resUpdateDesignation = await SecureService(navigate).PostResponse(Endpoints.Designation, 'PUT', designationUpdateObj);
+        resUpdateDesignation = await SecureService(navigate).PostResponse(Endpoints.Designation + '/' + designationStore?.id, 'PUT', designationUpdateObj);
         designationStore.isLoading = false;
 
         if (resUpdateDesignation?.status === 'UPDATED') {

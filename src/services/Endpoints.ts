@@ -17,7 +17,8 @@ const Endpoints = {
     Department: '/department',
     Designation: '/designation',
     GearType: '/gear-type',
-    Gear: '/gear'
+    Gear: '/gear',
+    LevelCrossing: '/lc'
 }
 
 export default Endpoints;

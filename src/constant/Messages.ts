@@ -42,7 +42,8 @@ const Messages = {
     EmptyDepartmentName: 'Please enter department name',
     EmptyDesignationName: 'Please enter designation',
     EmptyGearTypeName: 'Please enter gear type',
-    EmptyGearName: 'Please enter gear'
+    EmptyGearName: 'Please enter gear',
+    EmptyLevelCrossing: 'Please enter level grossing'
 }
 
 export default Messages;

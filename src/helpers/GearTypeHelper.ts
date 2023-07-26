@@ -25,7 +25,7 @@ const GearTypeHelper = (navigate: NavigateFunction) => {
     const CreateGearType = async () => {
         let resCreateGearType: any;
         const geartypeCreateObj = {
-            'geartype': gearTypeStore?.name
+            'gearType': gearTypeStore?.name
         }
 
         gearTypeStore.isLoading = true;
@@ -41,7 +41,7 @@ const GearTypeHelper = (navigate: NavigateFunction) => {
     const UpdateGearType = async () => {
         let resUpdateGearType: any;
         const geartypeUpdateObj = {
-            'geartype': gearTypeStore?.name,
+            'gearType': gearTypeStore?.name,
             'isActive': gearTypeStore?.isActive,
         }
 

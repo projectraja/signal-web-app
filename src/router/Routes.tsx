@@ -15,9 +15,20 @@ const Designation = lazy(() => import('../views/designation/Designation'));
 const AddDesignation = lazy(() => import('../views/designation/AddDesignation'));
 const UpdateDesignation = lazy(() => import('../views/designation/UpdateDesignation'));
 
+const GearType = lazy(() => import('../views/gear-type/GearType'));
+const AddGearType = lazy(() => import('../views/gear-type/AddGearType'));
+const UpdateGearType = lazy(() => import('../views/gear-type/UpdateGearType'));
+
+const Gear = lazy(() => import('../views/gear/Gear'));
+const AddGear = lazy(() => import('../views/gear/AddGear'));
+const UpdateGear = lazy(() => import('../views/gear/UpdateGear'));
+
 const Employee = lazy(() => import('../views/authentication/Employee'));
 const AddEmployee = lazy(() => import('../views/authentication/AddEmployee'));
 const UpdateEmployee = lazy(() => import('../views/authentication/UpdateEmployee'));
+const LevelCrossing = lazy(() => import('../views/level-crossing/LevelCrossing'));
+const AddLevelCrossing = lazy(() => import('../views/level-crossing/AddLevelCrossing'));
+const UpdateLevelCrossing = lazy(() => import('../views/level-crossing/UpdateLevelCrossing'));
 
 const Routes: IRoutesProps[] = [
     {
@@ -45,15 +56,15 @@ const Routes: IRoutesProps[] = [
         children: [], roles: ['']
     },
     {
-        path: 'level-crossing', name: 'Level Crossing', element: Station, icon: 'LevelCrossing',
+        path: 'level-crossing', name: 'Level Crossing', element: LevelCrossing, icon: 'LevelCrossing',
         children: [], roles: ['']
     },
     {
-        path: 'level-crossing/add', name: '', element: AddStation, icon: 'LevelCrossing',
+        path: 'level-crossing/add', name: '', element: AddLevelCrossing, icon: 'LevelCrossing',
         children: [], roles: ['']
     },
     {
-        path: 'level-crossing/:id', name: '', element: UpdateStation, icon: 'LevelCrossing',
+        path: 'level-crossing/:id', name: '', element: UpdateLevelCrossing, icon: 'LevelCrossing',
         children: [], roles: ['']
     },
     {
@@ -105,27 +116,27 @@ const Routes: IRoutesProps[] = [
         children: [], roles:  ['']
     },
     {
-        path: 'geas-type', name: 'Gear Types', element: Employee, icon: 'GearType',
+        path: 'geas-type', name: 'Gear Types', element: GearType, icon: 'GearType',
         children: [], roles: ['']
     },
     {
-        path: 'geas-type/add', name: '', element: AddEmployee, icon: 'GearType',
+        path: 'geas-type/add', name: '', element: AddGearType, icon: 'GearType',
         children: [], roles: ['']
     },
     {
-        path: 'geas-type/:id', name: '', element: UpdateEmployee, icon: 'GearType',
+        path: 'geas-type/:id', name: '', element: UpdateGearType, icon: 'GearType',
         children: [], roles:  ['']
     },
     {
-        path: 'gear', name: 'Gears', element: Employee, icon: 'Gear',
+        path: 'gear', name: 'Gears', element: Gear, icon: 'Gear',
         children: [], roles: ['']
     },
     {
-        path: 'gear/add', name: '', element: AddEmployee, icon: 'Gear',
+        path: 'gear/add', name: '', element: AddGear, icon: 'Gear',
         children: [], roles: ['']
     },
     {
-        path: 'gear/:id', name: '', element: UpdateEmployee, icon: 'Gear',
+        path: 'gear/:id', name: '', element: UpdateGear, icon: 'Gear',
         children: [], roles:  ['']
     },
 ];
